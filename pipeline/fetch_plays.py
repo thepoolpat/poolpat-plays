@@ -18,7 +18,9 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-DATA_DIR = Path(__file__).parent / "data"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+DATA_DIR = Path(__file__).parent.parent / "data"
 PLAYS_JSON = DATA_DIR / "plays.json"
 HISTORY_CSV = DATA_DIR / "history.csv"
 FAIL_TRACKER = DATA_DIR / ".fetch_failures.json"

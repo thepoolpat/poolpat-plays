@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import os
 import sys
 import time
 from typing import Any
 
 import requests
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from spotify_errors import (
     SpotifyAuthError,
