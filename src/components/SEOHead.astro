@@ -29,5 +29,5 @@ const fullOgImage = ogImage?.startsWith("http") ? ogImage : `${siteUrl}${ogImage
 {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
 {structuredData && (
-  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 )}

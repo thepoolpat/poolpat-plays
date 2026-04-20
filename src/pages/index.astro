@@ -3,7 +3,6 @@ import Base from "@/layouts/Base.astro";
 import ListenButton from "@/components/ListenButton.astro";
 import ChartBadge from "@/components/ChartBadge.astro";
 import StatCard from "@/components/StatCard.astro";
-import EmbeddedPlayer from "@/components/EmbeddedPlayer.astro";
 import releases from "@/data/releases.json";
 import playsRaw from "@data/plays.json";
 
@@ -14,7 +13,6 @@ const scTotal = data.soundcloud?.total_plays_all_platforms || data.soundcloud?.t
 const spTotal = data.spotify?.total_streams || 0;
 const amTotal = data.apple_music?.total_plays || 0;
 const grandTotal = scTotal + spTotal + amTotal;
-const scFollowers = data.soundcloud?.followers || 0;
 ---
 <Base title="Poolpat — Cork Hip-Hop" description="Poolpat — Cork hip-hop artist. Live play stats, full discography, and liner notes across SoundCloud, Spotify, and Apple Music.">
 
