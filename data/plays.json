@@ -1,6 +1,6 @@
 {
   "artist": "Poolpat",
-  "last_updated": "2026-04-20T07:48:55.678293+00:00",
+  "last_updated": "2026-04-20T18:59:26.041271+00:00",
   "soundcloud": {
     "url": "https://soundcloud.com/poolpat",
     "tracks": {
@@ -54,7 +54,7 @@
     "total_tracks": 46,
     "followers": 128,
     "fetch_status": "success",
-    "last_successful_fetch": "2026-04-20T07:48:58.422005+00:00",
+    "last_successful_fetch": "2026-04-20T18:59:28.727962+00:00",
     "total_plays_all_platforms": 50648,
     "total_listeners": 28323,
     "total_streams_sc": 18635,
@@ -64,6 +64,7 @@
   "spotify": {
     "url": "https://open.spotify.com/artist/4rr3o9anpUXitNXo0W4uX7",
     "artist_id": "4rr3o9anpUXitNXo0W4uX7",
+    "source": "Spotify for Artists (all-time)",
     "tracks": {
       "Collective Suicide X Otaku Black": 2499,
       "The Moocher X Goldie Bron$on X Jack Eagan": 1590,
@@ -84,15 +85,542 @@
       "Damsels in distress - Instrumental v2": 42,
       "Folks Now!": 41
     },
-    "note": "Values are play counts where available, otherwise Spotify popularity scores (0-100)",
-    "fetch_status": "failed",
-    "last_successful_fetch": "2026-03-12T00:00:00+00:00",
-    "shazams": 18,
     "total_streams": 14910,
+    "total_tracks": 21,
     "monthly_listeners": 14,
     "streams_28d": 26,
-    "total_tracks": 21,
-    "source": "Spotify for Artists (all-time)"
+    "fetch_status": "success",
+    "last_successful_fetch": "2026-04-20T18:59:30.340034+00:00",
+    "auth_method": "user_token",
+    "note": "total_streams/monthly_listeners from Spotify for Artists (manual). Track values are popularity scores.",
+    "top_tracks_short": [
+      {
+        "name": "Meadow Song in G for Birds and Piano",
+        "popularity": 0
+      }
+    ],
+    "top_tracks_medium": [
+      {
+        "name": "Folks Now!",
+        "popularity": 0
+      },
+      {
+        "name": "NO EYES",
+        "popularity": 0
+      },
+      {
+        "name": "Sephiroth",
+        "popularity": 0
+      },
+      {
+        "name": "J'peux pas y a le match - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Minnie",
+        "popularity": 0
+      },
+      {
+        "name": "Damsels In Distress",
+        "popularity": 0
+      },
+      {
+        "name": "Ooh la la la!",
+        "popularity": 0
+      },
+      {
+        "name": "Tapis Rouge - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Minnie X SaturnAstrid",
+        "popularity": 0
+      },
+      {
+        "name": "Damsels in distress - Instrumental",
+        "popularity": 0
+      },
+      {
+        "name": "Ça me saoule",
+        "popularity": 0
+      },
+      {
+        "name": "Fausse impression X Boula",
+        "popularity": 0
+      },
+      {
+        "name": "Schneck de traître X L.Stoch",
+        "popularity": 0
+      },
+      {
+        "name": "Get It Out",
+        "popularity": 0
+      },
+      {
+        "name": "Samurai Jack",
+        "popularity": 0
+      },
+      {
+        "name": "The Moocher X Goldie Bron$on X Jack Eagan",
+        "popularity": 0
+      },
+      {
+        "name": "Collective Suicide X Otaku Black",
+        "popularity": 0
+      },
+      {
+        "name": "Déjà 30 piges - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Interlude de bat%rd",
+        "popularity": 0
+      },
+      {
+        "name": "The Kraken X Otaku Black X Jimmy Cena scratch by JusMe",
+        "popularity": 0
+      },
+      {
+        "name": "I hear the rain X Haneli",
+        "popularity": 0
+      },
+      {
+        "name": "Wanna Be Seen",
+        "popularity": 0
+      },
+      {
+        "name": "La Note - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "大展鴻圖(Blueprint Supreme)",
+        "popularity": 0
+      },
+      {
+        "name": "Change",
+        "popularity": 0
+      },
+      {
+        "name": "Meadow Song in G for Birds and Piano",
+        "popularity": 0
+      },
+      {
+        "name": "Killswitch Lullaby",
+        "popularity": 0
+      },
+      {
+        "name": "Unhinged",
+        "popularity": 0
+      },
+      {
+        "name": "Wanpratheep",
+        "popularity": 0
+      }
+    ],
+    "top_tracks_long": [
+      {
+        "name": "Folks Now!",
+        "popularity": 0
+      },
+      {
+        "name": "NO EYES",
+        "popularity": 0
+      },
+      {
+        "name": "Ooh la la la!",
+        "popularity": 0
+      },
+      {
+        "name": "Wanna Be Seen",
+        "popularity": 0
+      },
+      {
+        "name": "Sephiroth",
+        "popularity": 0
+      },
+      {
+        "name": "J'peux pas y a le match - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Minnie",
+        "popularity": 0
+      },
+      {
+        "name": "Damsels In Distress - Instrumental",
+        "popularity": 0
+      },
+      {
+        "name": "Tapis Rouge - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "The Moocher X Goldie Bron$on X Jack Eagan",
+        "popularity": 0
+      },
+      {
+        "name": "Minnie X SaturnAstrid",
+        "popularity": 0
+      },
+      {
+        "name": "Damsels in distress - Instrumental",
+        "popularity": 0
+      },
+      {
+        "name": "Ça me saoule",
+        "popularity": 0
+      },
+      {
+        "name": "Fausse impression X Boula",
+        "popularity": 0
+      },
+      {
+        "name": "Schneck de traître X L.Stoch",
+        "popularity": 0
+      },
+      {
+        "name": "Get It Out",
+        "popularity": 0
+      },
+      {
+        "name": "Samurai Jack",
+        "popularity": 0
+      },
+      {
+        "name": "Collective Suicide X Otaku Black",
+        "popularity": 0
+      },
+      {
+        "name": "Déjà 30 piges - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Interlude de bat%rd",
+        "popularity": 0
+      },
+      {
+        "name": "The Kraken X Otaku Black X Jimmy Cena scratch by JusMe",
+        "popularity": 0
+      },
+      {
+        "name": "I hear the rain X Haneli",
+        "popularity": 0
+      },
+      {
+        "name": "La Note - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "大展鴻圖(Blueprint Supreme)",
+        "popularity": 0
+      },
+      {
+        "name": "Change",
+        "popularity": 0
+      },
+      {
+        "name": "On The Move",
+        "popularity": 0
+      },
+      {
+        "name": "Red Sun in the Sky",
+        "popularity": 0
+      },
+      {
+        "name": "Your Latest Trick - Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Two Moons",
+        "popularity": 0
+      },
+      {
+        "name": "Narcotics - Extended Version",
+        "popularity": 0
+      },
+      {
+        "name": "Meadow Song in G for Birds and Piano",
+        "popularity": 0
+      },
+      {
+        "name": "Love Story (vs Finally) - Paul Woolford 2023 Remix",
+        "popularity": 0
+      },
+      {
+        "name": "Killswitch Lullaby",
+        "popularity": 0
+      },
+      {
+        "name": "Company",
+        "popularity": 0
+      },
+      {
+        "name": "Hard Knock Life (Ghetto Anthem)",
+        "popularity": 0
+      },
+      {
+        "name": "Unhinged",
+        "popularity": 0
+      },
+      {
+        "name": "Yours",
+        "popularity": 0
+      },
+      {
+        "name": "Le Tempo",
+        "popularity": 0
+      },
+      {
+        "name": "Căștile Mele",
+        "popularity": 0
+      },
+      {
+        "name": "Wanpratheep",
+        "popularity": 0
+      },
+      {
+        "name": "Killing Me Softly With His Song",
+        "popularity": 0
+      },
+      {
+        "name": "C.R.E.A.M. (Cash Rules Everything Around Me)",
+        "popularity": 0
+      },
+      {
+        "name": "Gangsta's Paradise",
+        "popularity": 0
+      },
+      {
+        "name": "Work",
+        "popularity": 0
+      },
+      {
+        "name": "La mer",
+        "popularity": 0
+      },
+      {
+        "name": "Ni**as In Paris",
+        "popularity": 0
+      },
+      {
+        "name": "Moment Of Truth",
+        "popularity": 0
+      },
+      {
+        "name": "It Was A Good Day",
+        "popularity": 0
+      },
+      {
+        "name": "Full Clip",
+        "popularity": 0
+      },
+      {
+        "name": "Cairo",
+        "popularity": 0
+      }
+    ],
+    "recently_played": [
+      {
+        "name": "Meadow Song in G for Birds and Piano",
+        "played_at": "2026-04-17T20:18:49.639Z"
+      },
+      {
+        "name": "LES VAGUES DU CIEL",
+        "played_at": "2026-04-17T20:11:41.741Z"
+      },
+      {
+        "name": "Wanna Be Seen",
+        "played_at": "2026-03-12T17:32:22.483Z"
+      },
+      {
+        "name": "Schneck de traître X L.Stoch",
+        "played_at": "2026-03-12T16:35:38.702Z"
+      },
+      {
+        "name": "Déjà 30 piges - Remix",
+        "played_at": "2026-03-12T16:32:46.172Z"
+      },
+      {
+        "name": "Interlude de bat%rd",
+        "played_at": "2026-03-12T16:30:15.678Z"
+      },
+      {
+        "name": "NO EYES",
+        "played_at": "2026-03-12T16:28:58.348Z"
+      },
+      {
+        "name": "Sephiroth",
+        "played_at": "2026-03-12T16:22:39.716Z"
+      },
+      {
+        "name": "Ça me saoule",
+        "played_at": "2026-03-12T16:20:09.369Z"
+      },
+      {
+        "name": "J'peux pas y a le match - Remix",
+        "played_at": "2026-03-12T16:16:29.002Z"
+      },
+      {
+        "name": "Ooh la la la!",
+        "played_at": "2026-03-12T16:14:10.802Z"
+      },
+      {
+        "name": "Damsels In Distress - Instrumental",
+        "played_at": "2026-03-12T16:10:19.479Z"
+      },
+      {
+        "name": "Minnie X SaturnAstrid",
+        "played_at": "2026-03-12T16:08:43.024Z"
+      },
+      {
+        "name": "Damsels in distress - Instrumental",
+        "played_at": "2026-03-12T16:04:32.791Z"
+      },
+      {
+        "name": "Collective Suicide X Otaku Black",
+        "played_at": "2026-03-12T16:02:55.206Z"
+      },
+      {
+        "name": "Minnie",
+        "played_at": "2026-03-12T15:58:44.766Z"
+      },
+      {
+        "name": "Get It Out",
+        "played_at": "2026-03-12T15:54:27Z"
+      },
+      {
+        "name": "I hear the rain X Haneli",
+        "played_at": "2026-03-12T15:51:26.528Z"
+      },
+      {
+        "name": "La Note - Remix",
+        "played_at": "2026-03-12T15:49:04.661Z"
+      },
+      {
+        "name": "Folks Now!",
+        "played_at": "2026-03-12T15:45:59.990Z"
+      },
+      {
+        "name": "Samurai Jack",
+        "played_at": "2026-03-12T15:43:03.663Z"
+      },
+      {
+        "name": "Fausse impression X Boula",
+        "played_at": "2026-03-12T15:42:14.091Z"
+      },
+      {
+        "name": "The Moocher X Goldie Bron$on X Jack Eagan",
+        "played_at": "2026-03-12T15:39:36.653Z"
+      },
+      {
+        "name": "Tapis Rouge - Remix",
+        "played_at": "2026-03-12T15:36:42.137Z"
+      },
+      {
+        "name": "Tapis Rouge - Remix",
+        "played_at": "2026-03-12T11:24:04.002Z"
+      },
+      {
+        "name": "The Kraken X Otaku Black X Jimmy Cena scratch by JusMe",
+        "played_at": "2026-03-12T11:17:20.308Z"
+      },
+      {
+        "name": "Wanna Be Seen",
+        "played_at": "2026-03-12T11:14:53.570Z"
+      },
+      {
+        "name": "Schneck de traître X L.Stoch",
+        "played_at": "2026-03-12T11:13:44.517Z"
+      },
+      {
+        "name": "Déjà 30 piges - Remix",
+        "played_at": "2026-03-12T11:12:51.444Z"
+      },
+      {
+        "name": "Interlude de bat%rd",
+        "played_at": "2026-03-12T11:07:40.948Z"
+      },
+      {
+        "name": "NO EYES",
+        "played_at": "2026-03-12T11:05:32.817Z"
+      },
+      {
+        "name": "Sephiroth",
+        "played_at": "2026-03-12T10:59:13.587Z"
+      },
+      {
+        "name": "Ça me saoule",
+        "played_at": "2026-03-12T10:56:46.427Z"
+      },
+      {
+        "name": "J'peux pas y a le match - Remix",
+        "played_at": "2026-03-12T10:53:06.386Z"
+      },
+      {
+        "name": "Ooh la la la!",
+        "played_at": "2026-03-12T08:59:52.423Z"
+      },
+      {
+        "name": "Damsels In Distress - Instrumental",
+        "played_at": "2026-03-12T08:48:08.289Z"
+      },
+      {
+        "name": "Minnie X SaturnAstrid",
+        "played_at": "2026-03-12T08:46:32.971Z"
+      },
+      {
+        "name": "Damsels in distress - Instrumental",
+        "played_at": "2026-03-12T08:42:21.407Z"
+      },
+      {
+        "name": "Collective Suicide X Otaku Black",
+        "played_at": "2026-03-12T08:40:44.587Z"
+      },
+      {
+        "name": "Minnie",
+        "played_at": "2026-03-12T08:36:32.062Z"
+      },
+      {
+        "name": "Get It Out",
+        "played_at": "2026-03-12T08:32:14.381Z"
+      },
+      {
+        "name": "I hear the rain X Haneli",
+        "played_at": "2026-03-12T08:29:10.993Z"
+      },
+      {
+        "name": "La Note - Remix",
+        "played_at": "2026-03-12T08:26:54.077Z"
+      },
+      {
+        "name": "Folks Now!",
+        "played_at": "2026-03-12T08:23:44.279Z"
+      },
+      {
+        "name": "Samurai Jack",
+        "played_at": "2026-03-12T08:20:45.513Z"
+      },
+      {
+        "name": "Fausse impression X Boula",
+        "played_at": "2026-03-12T08:20:04.238Z"
+      },
+      {
+        "name": "The Moocher X Goldie Bron$on X Jack Eagan",
+        "played_at": "2026-03-12T08:17:25.750Z"
+      },
+      {
+        "name": "Tapis Rouge - Remix",
+        "played_at": "2026-03-12T08:14:17.415Z"
+      },
+      {
+        "name": "The Kraken X Otaku Black X Jimmy Cena scratch by JusMe",
+        "played_at": "2026-03-12T08:10:56.260Z"
+      },
+      {
+        "name": "Wanna Be Seen",
+        "played_at": "2026-03-12T08:08:22.501Z"
+      }
+    ]
   },
   "apple_music": {
     "url": "https://music.apple.com/us/artist/poolpat/1716939831",
