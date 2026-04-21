@@ -120,13 +120,10 @@ code { background: var(--card); padding: .15rem .4rem; border-radius: 4px; font-
 
 footer { color: var(--muted); font-size: .85rem; text-align: center; padding: 3rem 0 1rem; border-top: 1px solid var(--border); margin-top: 4rem; }
 
-.artist-header { position: relative; border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
-.artist-banner { width: 100%; aspect-ratio: 1300/740; object-fit: cover; display: block; }
-.artist-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 1.5rem 1.2rem; background: linear-gradient(transparent, rgba(0,0,0,.7)); display: flex; flex-direction: column; align-items: flex-start; text-decoration: none; }
-.artist-name { font-family: "SF Pro Display", -apple-system, sans-serif; font-size: 2.8rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1.1; text-decoration: none; }
-.artist-name:hover { opacity: .9; text-decoration: none; }
-.artist-follow { display: inline-flex; align-items: center; gap: .3rem; color: rgba(255,255,255,.7); font-size: .85rem; margin-top: .3rem; }
-.artist-follow svg { width: 14px; height: 14px; fill: currentColor; }
+.artist-header { border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+.artist-header a { display: block; }
+.artist-banner { width: 100%; display: block; transition: opacity .2s ease; }
+.artist-header a:hover .artist-banner { opacity: .9; }
 
 .social-bar { display: flex; align-items: center; justify-content: center; gap: .8rem; margin: 1rem 0 .5rem; flex-wrap: wrap; }
 .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); color: var(--muted); transition: border-color .2s ease, color .2s ease; text-decoration: none; }
@@ -150,8 +147,6 @@ footer { color: var(--muted); font-size: .85rem; text-align: center; padding: 3r
   .chart-container canvas { max-height: 250px; }
   .hero-stage { min-height: 300px; }
   .releases { grid-template-columns: repeat(2, 1fr); }
-  .artist-name { font-size: 2.2rem; }
-  .artist-overlay { padding: 1rem; }
   .social-icon { width: 36px; height: 36px; }
   .social-icon svg { width: 18px; height: 18px; }
 }
