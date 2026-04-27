@@ -64,7 +64,7 @@
   "spotify": {
     "url": "https://open.spotify.com/artist/4rr3o9anpUXitNXo0W4uX7",
     "artist_id": "4rr3o9anpUXitNXo0W4uX7",
-    "source": "Spotify for Artists (all-time)",
+    "source": "Spotify for Artists (all-time) + Camoufox integration (local-first)",
     "tracks": {
       "Collective Suicide X Otaku Black": 2499,
       "The Moocher X Goldie Bron$on X Jack Eagan": 1590,
@@ -620,7 +620,8 @@
         "name": "Wanna Be Seen",
         "played_at": "2026-03-12T08:08:22.501Z"
       }
-    ]
+    ],
+    "last_updated": "2026-04-27T23:55:50.942223+00:00"
   },
   "apple_music": {
     "url": "https://music.apple.com/us/artist/poolpat/1716939831",

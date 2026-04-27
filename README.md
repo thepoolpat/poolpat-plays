@@ -26,29 +26,113 @@ Unified artist portfolio for **Poolpat** — live play stats, full discography, 
 
 ```
 ├── .github/workflows/
-│   ├── deploy.yml              # Build Astro → deploy to GitHub Pages
-│   └── fetch-plays.yml         # Daily Python pipeline (cron 07:15 UTC)
-├── packages/affiliate-helper/  # Apple Music affiliate link builder (JS)
+│    ├── deploy.yml               # Build Astro → deploy to GitHub Pages
+│    └── fetch-plays.yml          # Daily Python pipeline (cron 07:15 UTC)
+├── packages/affiliate-helper/   # Apple Music affiliate link builder (JS)
 ├── pipeline/
-│   ├── fetch_plays.py          # Multi-platform play count scraper
-│   ├── spotify_auth.py         # Spotify PKCE OAuth flow
-│   ├── spotify_client.py       # Spotify API client (typed, with retry)
-│   ├── spotify_errors.py       # Typed error hierarchy
-│   ├── requirements.txt
-│   └── tests/                  # 20 unit tests
-├── examples/                   # Runnable Spotify demos
-├── data/                       # Auto-committed by pipeline
-│   ├── plays.json              # Latest play count snapshot
-│   ├── history.csv             # Time-series (appended daily)
-│   └── rss_tracks.json         # SoundCloud catalog
-├── public/artwork/             # Release cover images (1200px, web-optimized)
+│    ├── fetch_plays.py           # Multi-platform play count scraper
+│    ├── spotify_auth.py          # Spotify PKCE OAuth flow
+│    ├── spotify_client.py        # Spotify API client (typed, with retry)
+│    ├── spotify_errors.py        # Typed error hierarchy
+│    ├── requirements.txt
+│    └── tests/                   # 20 unit tests
+├── examples/                    # Runnable Spotify demos
+├── data/                        # Auto-committed by pipeline
+│    ├── plays.json               # Latest play count snapshot
+│    ├── history.csv              # Time-series (appended daily)
+│    └── rss_tracks.json          # SoundCloud catalog
+├── public/artwork/              # Release cover images (1200px, web-optimized)
 └── src/
-    ├── data/releases.json      # Hand-maintained release catalog (7 releases)
-    ├── layouts/Base.astro      # HTML shell, SEO, a11y
-    ├── components/             # Astro components
-    ├── pages/                  # Route pages
-    └── styles/global.css       # Unified design tokens
+     ├── data/releases.json       # Hand-maintained release catalog (7 releases)
+     ├── layouts/Base.astro       # HTML shell, SEO, a11y
+     ├── components/              # Astro components
+     ├── pages/                   # Route pages
+     └── styles/global.css        # Unified design tokens
 ```
+
+## 🎵 Camoufox Spotify Integration (NEW)
+
+**Integration Date:** 2026-04-27
+
+This portfolio now features **Camoufox anti-detect browser** integration for advanced Spotify playback tracking:
+
+### What It Does
+
+1. **Real-time playback capture** via Spotify Web Player through Camoufox
+2. **OAuth cache management** at `/Users/mortymcfly/.cache/spotify_oauth`
+3. **SQLite database** at `~/spotty_logs/logs.db` for continuous tracking
+4. **Local data feed** to update play counts locally before pushing to repos
+5. **Monotonic invariant** maintained — play counts never decrease
+
+### Local Integration Script
+
+Run the Camoufox-Spotify integration locally:
+
+```bash
+python3 /Users/mortymcfly/integrate_spotify_play_data.py
+```
+
+This script:
+- Logs current playback every 5 seconds
+- Captures via Camoufox browser automation
+- Feeds to SQLite database
+- Updates both `poolpat-portfolio` and `poolpat-plays` repos
+- Maintains monotonic play count invariant
+
+### Configuration
+
+Create `spotify_camoufox_config.json` in your home directory:
+
+```json
+{
+  "client_id": "88d1cb87aba74f809133542879d8885c",
+  "client_secret": "[YOUR_SECRET]",
+  "redirect_uri": "http://127.0.0.1:8888/callback",
+  "scopes": "user-read-playback-state,user-library-read,user-top-read",
+  "refresh_interval": 30,
+  "max_api_calls": 200,
+  "camoufox_logging": true
+}
+```
+
+### Cache Directories
+
+- `/Users/mortymcfly/.cache/spotify_oauth` — OAuth token cache
+- `/Users/mortymcfly/Library/Caches/camoufox` — Browser cache
+- `~/spotty_logs/logs.db` — Local SQLite database
+
+### Usage
+
+**Track playback continuously:**
+```bash
+# Run the integration script
+python3 /Users/mortymcfly/integrate_spotify_play_data.py
+
+# Script logs 10 playback cycles (50 seconds total)
+# Each cycle captures current track info
+```
+
+**View logged data:**
+```bash
+sqlite3 ~/spotty_logs/logs.db "SELECT COUNT(*) FROM play_data;"
+sqlite3 ~/spotty_logs/logs.db "SELECT track_name, artist_name, played_at FROM play_data ORDER BY played_at DESC LIMIT 10;"
+```
+
+### Monotonic Invariant
+
+The integration **never reduces** play counts:
+- Existing plays are preserved
+- New plays are merged via `max(existing, new)` 
+- Tracks are added if new
+- Database grows monotonically
+
+### Camoufox Features
+
+- **Anti-detect browser:** v0.4.11 (Firefox 135.0.1-beta.24)
+- **OAuth cache fix:** Proper cache directory setup
+- **Spotify Web Player automation:** Captures playback state
+- **Error resilience:** Handles 403, cache failures gracefully
+- **Local-first:** All data stored locally before repo update
 
 ## Setup
 
@@ -72,15 +156,15 @@ npm run check
 1. Register an app at [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
 2. Add redirect URI: `http://127.0.0.1:8888/callback`
 3. Run the auth flow:
-   ```bash
-   python3 pipeline/spotify_auth.py
-   # Enter your Client ID when prompted
-   # Authorize in browser → get refresh token
-   ```
+    ```bash
+    python3 pipeline/spotify_auth.py
+    # Enter your Client ID when prompted
+    # Authorize in browser → get refresh token
+    ```
 4. Add secrets to [GitHub Actions](../../settings/secrets/actions):
-   - `SPOTIFY_CLIENT_ID`
-   - `SPOTIFY_CLIENT_SECRET`
-   - `SPOTIFY_REFRESH_TOKEN`
+    - `SPOTIFY_CLIENT_ID`
+    - `SPOTIFY_CLIENT_SECRET`
+    - `SPOTIFY_REFRESH_TOKEN`
 
 ### Running the Pipeline Locally
 
@@ -103,8 +187,9 @@ The Python fetcher runs daily at 07:15 UTC via GitHub Actions:
 2. **Spotify (public):** Client Credentials → catalog popularity scores (0-100)
 3. **SoundCloud:** RSS feed + v2 API → play counts, catalog metadata
 4. **Apple Music:** API or web scraping → track catalog (plays are manual entry)
-5. Enforces a **monotonic invariant** — play counts never decrease between fetches
-6. Commits updated `data/` files to `main` → triggers site rebuild
+5. **Camoufox integration:** Local-first playback tracking with monotonic invariant
+6. Enforces a **monotonic invariant** — play counts never decrease between fetches
+7. Commits updated `data/` files to `main` → triggers site rebuild
 
 ### Required Secrets
 
@@ -113,11 +198,13 @@ The Python fetcher runs daily at 07:15 UTC via GitHub Actions:
 | `SPOTIFY_CLIENT_ID` | Spotify API access |
 | `SPOTIFY_CLIENT_SECRET` | Spotify API access |
 | `SPOTIFY_REFRESH_TOKEN` | User-scoped Spotify data (PKCE) |
+| `CAMOUXF_HOME` | Camoufox cache directory (local-first mode) |
 | `APPLE_MUSIC_TOKEN` | Apple Music API access (optional — requires paid Developer Program) |
 
 ### Platform Notes
 
 - **Spotify:** `total_streams` and `monthly_listeners` are preserved from manual entry (Spotify for Artists). The API provides popularity scores and top tracks.
+- **Camoufox:** Real-time playback tracking via Spotify Web Player. Local cache ensures OAuth reliability. Data flows to both repos.
 - **Apple Music:** Play counts are manual entry only. API token requires paid Apple Developer Program ($99/yr). Data preserved at current values when token unavailable.
 - **SoundCloud:** Fully automated via v2 API + RSS feed.
 
@@ -135,3 +222,11 @@ This repo unifies two earlier projects:
 | Project | What it contributed |
 |---------|-------------------|
 | [poolpat-plays](https://github.com/thepoolpat/poolpat-plays) | Data pipeline, GitHub Actions workflow, play count data |
+| **Integrations** | Camoufox-Spotify local-first data feed with monotonic streaming invariant |
+
+## Credits
+
+- **Camoufox anti-detect browser:** v0.4.11 / Firefox 135.0.1-beta.24
+- **Spotify API client:** spotipy with PKCE OAuth 2.0
+- **SQLite logging:** `~/spotty_logs/logs.db`
+- **Local-first design:** All play data captured locally before repo sync
