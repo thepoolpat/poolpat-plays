@@ -10,14 +10,19 @@ const scTracks = data.soundcloud?.tracks || {};
 const spTracks = data.spotify?.tracks || {};
 const amTracks = data.apple_music?.tracks || {};
 
-const scTotal = data.soundcloud?.total_plays_all_platforms || data.soundcloud?.total_plays || Object.values(scTracks).reduce((a: number, b: any) => a + (b || 0), 0);
-const spTotal = data.spotify?.total_streams || Object.values(spTracks).reduce((a: number, b: any) => a + (b || 0), 0);
-const amTotal = data.apple_music?.total_plays || Object.values(amTracks).reduce((a: number, b: any) => a + (b || 0), 0);
+const scTotal = data.soundcloud?.total_plays_all_platforms || data.soundcloud?.total_plays ||
+  Object.values(scTracks).reduce((a: number, b: any) => a + (b || 0), 0);
+const spTotal = data.spotify?.total_streams ||
+  Object.values(spTracks).reduce((a: number, b: any) => a + (b || 0), 0);
+const amTotal = data.apple_music?.total_plays ||
+  Object.values(amTracks).reduce((a: number, b: any) => a + (b || 0), 0);
 const grandTotal = scTotal + spTotal + amTotal;
 
 const scFollowers = data.soundcloud?.followers || 0;
 const spMonthly = data.spotify?.monthly_listeners || 0;
-const lastUpdated = data.last_updated ? new Date(data.last_updated).toLocaleDateString("en-IE", { day: "numeric", month: "short", year: "numeric" }) : "unknown";
+const lastUpdated = data.last_updated
+  ? new Date(data.last_updated).toLocaleDateString("en-IE", { day: "numeric", month: "short", year: "numeric" })
+  : "unknown";
 
 function sortedTracks(tracks: Record<string, number>): [string, number][] {
   return Object.entries(tracks).filter(([, v]) => v != null).sort((a, b) => (b[1] || 0) - (a[1] || 0));
@@ -27,6 +32,7 @@ const scSorted = sortedTracks(scTracks);
 const spSorted = sortedTracks(spTracks);
 const amSorted = sortedTracks(amTracks);
 ---
+
 <Base title="Poolpat — Play Stats" description="Live play count dashboard for Poolpat across SoundCloud, Spotify, and Apple Music." canonicalPath="/stats/">
   <h1>Play Stats</h1>
   <p class="muted">Updated daily &middot; Last: {lastUpdated}</p>
@@ -41,12 +47,13 @@ const amSorted = sortedTracks(amTracks);
   <section class="section">
     <h2>Play Count Trends</h2>
     <div class="chart-container" style="position:relative;height:320px;">
-      <canvas id="plays-chart" role="img" aria-label="Line chart showing play count trends over time for SoundCloud, Spotify, and Apple Music"></canvas>
+      <canvas id="plays-chart" role="img" aria-label="Line chart showing SoundCloud play count trends over time"></canvas>
       <script type="application/json" id="chart-data">{JSON.stringify(historyRaw)}</script>
     </div>
   </section>
 
   <script type="module">
+    // Parse the raw CSV string (JSON-stringified by Astro)
     const raw = JSON.parse(document.getElementById("chart-data").textContent);
     const lines = raw.split(/\r?\n/);
     const headers = lines[0].split(",").map(h => h.trim());
@@ -65,15 +72,16 @@ const amSorted = sortedTracks(amTracks);
     });
     const dedupedRows = Object.values(byDay);
 
+    // CSV columns: timestamp, soundcloud_total_plays, soundcloud_track_count,
+    //              spotify_total_popularity, spotify_track_count, apple_music_track_count
+    // Only soundcloud_total_plays is a real cumulative play count in this CSV.
+    // Spotify total_streams and Apple Music total_plays come from plays.json (current snapshot).
+    const sc = dedupedRows.map(r => parseInt(r.soundcloud_total_plays) || 0);
+
     const labels = dedupedRows.map(r => {
       const d = new Date(r.timestamp);
-      return d.toLocaleDateString("en-IE", { month: "short", day: "numeric" });
+      return d.toLocaleDateString("en-IE", { month: "short", day: "numeric", year: "2-digit" });
     });
-
-    // Use the actual CSV column names
-    const sc = dedupedRows.map(r => parseInt(r.soundcloud_total_plays) || 0);
-    const sp = dedupedRows.map(r => parseInt(r.spotify_total_popularity) || 0);
-    const am = dedupedRows.map(r => parseInt(r.apple_music_track_count) || 0);
 
     const { Chart, registerables } = await import("https://cdn.jsdelivr.net/npm/chart.js@4/+esm");
     Chart.register(...registerables);
@@ -83,64 +91,97 @@ const amSorted = sortedTracks(amTracks);
       data: {
         labels,
         datasets: [
-          { label: "SoundCloud", data: sc, borderColor: "#ff5500", backgroundColor: "rgba(255,85,0,.1)", tension: .3, fill: true },
-          { label: "Spotify", data: sp, borderColor: "#1db954", backgroundColor: "rgba(29,185,84,.1)", tension: .3, fill: true },
-          { label: "Apple Music", data: am, borderColor: "#fc3c44", backgroundColor: "rgba(252,60,68,.1)", tension: .3, fill: true },
+          {
+            label: "SoundCloud Plays",
+            data: sc,
+            borderColor: "#ff5500",
+            backgroundColor: "rgba(255,85,0,.15)",
+            tension: 0.3,
+            fill: true,
+            borderWidth: 3,
+            pointRadius: 0,
+            pointHitRadius: 10,
+          },
         ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: "#f5f5f7" } } },
-        scales: {
-          x: { ticks: { color: "#98989d", maxTicksLimit: 10 }, grid: { color: "rgba(255,255,255,0.05)" } },
-          y: { ticks: { color: "#98989d" }, grid: { color: "rgba(255,255,255,0.05)" } },
+        plugins: {
+          legend: { labels: { color: "#f5f5f7", font: { size: 13 } } },
+          title: {
+            display: true,
+            text: "SoundCloud Play Count History",
+            color: "#f5f5f7",
+            font: { size: 16, weight: "bold" },
+            padding: { top: 8, bottom: 16 },
+          },
+          tooltip: {
+            backgroundColor: "rgba(0,0,0,0.8)",
+            titleColor: "#f5f5f7",
+            bodyColor: "#f5f5f7",
+            callbacks: {
+              label: ctx => ` ${ctx.parsed.y.toLocaleString()} plays`,
+            },
+          },
         },
+        scales: {
+          x: {
+            ticks: { color: "#98989d", maxTicksLimit: 10, maxRotation: 0 },
+            grid: { color: "rgba(255,255,255,0.05)" },
+          },
+          y: {
+            beginAtZero: false,
+            ticks: {
+              color: "#98989d",
+              callback: v => v >= 1000 ? (v/1000).toFixed(0)+"K" : v,
+            },
+            grid: { color: "rgba(255,255,255,0.05)" },
+          },
+        },
+        animation: { duration: 1500, easing: "easeOutQuart" },
       },
     });
   </script>
 
   <section class="section">
-    <h2>Top Tracks — SoundCloud</h2>
-    <ul class="tracks">
+    <h2>Top Tracks &mdash; SoundCloud</h2>
+    <ol class="tracks">
       {scSorted.slice(0, 15).map(([title, plays], i) => (
         <li class="track">
           <span class="track-num">{i + 1}</span>
           <span class="track-title">{title}</span>
-          <span class="track-duration" style={`color:var(--accent-sc)`}>{plays.toLocaleString("en-IE")}</span>
+          <span>{plays.toLocaleString("en-IE")}</span>
         </li>
       ))}
-    </ul>
+    </ol>
   </section>
 
   <section class="section">
-    <h2>Top Tracks — Spotify</h2>
-    <ul class="tracks">
+    <h2>Top Tracks &mdash; Spotify</h2>
+    <ol class="tracks">
       {spSorted.slice(0, 15).map(([title, plays], i) => (
         <li class="track">
           <span class="track-num">{i + 1}</span>
           <span class="track-title">{title}</span>
-          <span class="track-duration" style={`color:var(--accent-sp)`}>{plays.toLocaleString("en-IE")}</span>
+          <span>{plays.toLocaleString("en-IE")}</span>
         </li>
       ))}
-    </ul>
+    </ol>
   </section>
 
   <section class="section">
-    <h2>Top Tracks — Apple Music</h2>
-    <ul class="tracks">
+    <h2>Top Tracks &mdash; Apple Music</h2>
+    <ol class="tracks">
       {amSorted.slice(0, 15).map(([title, plays], i) => (
         <li class="track">
           <span class="track-num">{i + 1}</span>
           <span class="track-title">{title}</span>
-          <span class="track-duration" style={`color:var(--accent-am)`}>{plays.toLocaleString("en-IE")}</span>
+          <span>{plays.toLocaleString("en-IE")}</span>
         </li>
       ))}
-    </ul>
+    </ol>
   </section>
 
-  <nav class="nav-links" style="margin-top:2rem">
-    <a class="nav-link" href={`${import.meta.env.BASE_URL}`}>&larr; Home</a>
-    <a class="nav-link" href={`${import.meta.env.BASE_URL}discography/`}>Discography</a>
-  </nav>
+  <p><a href={`${import.meta.env.BASE_URL}`}>&larr; Home</a> &nbsp; <a href={`${import.meta.env.BASE_URL}discography/`}>Discography</a></p>
 </Base>
