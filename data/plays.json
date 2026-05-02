@@ -1,6 +1,6 @@
 {
   "artist": "Poolpat",
-  "last_updated": "2026-05-02T00:02:17.176591+00:00",
+  "last_updated": "2026-05-02T02:48:32.380841+00:00",
   "soundcloud": {
     "url": "https://soundcloud.com/poolpat",
     "tracks": {
@@ -25,36 +25,36 @@
       "O'sho II": 19,
       "Midtown Winter Lofi": 159,
       "P.S. (Waves Rework, Ft. Farid Williams, King of Hearts)": 467,
-      "\u00c7a Me Saoule": 756,
+      "Ça Me Saoule": 756,
       "Interlude": 256,
       "Trauma": 231,
       "Crazy - Cover": 267,
-      "Cara Mo Bhean Ch\u00e9ile - Freestyle": 259,
+      "Cara Mo Bhean Chéile - Freestyle": 259,
       "Come Together - Freestyle": 247,
       "Wanna Be Seen Ft Bubba Shakespeare, Emi, Jaws, Poolpat": 270,
       "Otaku's Doodle": 372,
       "The Moocher": 194,
-      "Cara mo bhean ch\u00e9ile": 149,
-      "Teacht le ch\u00e9ile": 21,
-      "Schneck De Tra\u00eetre X L.Stoch": 775,
+      "Cara mo bhean chéile": 149,
+      "Teacht le chéile": 21,
+      "Schneck De Traître X L.Stoch": 775,
       "Fausse Impression X Boula": 836,
       "Minnie (Ft. Jaws, SaturnAstrid, Farid Williams)": 776,
       "The Moocher (Ft. Goldie Bron$on & Jack Egan)": 1061,
       "I Hear The Rain X Haneli": 769,
       "Collective Suicide (Ft. Otaku Black)": 764,
-      "D\u00e9j\u00e0 30 Piges (feat. Djar One & Jaws) [Remix]": 1354,
+      "Déjà 30 Piges (feat. Djar One & Jaws) [Remix]": 1354,
       "O'sho | Drogba [x] Poolpat [=] Danilo Milk [~]": 0,
-      "Cara Mo Bhean Che\u0301ile - Freestyle": 259,
-      "Otaku\u2019s Doodle": 372,
-      "C\u0327a Me Saoule": 756,
-      "Schneck De Trai\u0302tre X L.Stoch": 775,
-      "De\u0301ja\u0300 30 Piges (feat. Djar One & Jaws) [Remix]": 1354
+      "Cara Mo Bhean Chéile - Freestyle": 259,
+      "Otaku’s Doodle": 372,
+      "Ça Me Saoule": 756,
+      "Schneck De Traître X L.Stoch": 775,
+      "Déjà 30 Piges (feat. Djar One & Jaws) [Remix]": 1354
     },
     "total_plays": 51703,
     "total_tracks": 46,
     "followers": 128,
     "fetch_status": "success",
-    "last_successful_fetch": "2026-04-20T18:59:28.727962+00:00",
+    "last_successful_fetch": "2026-05-02T02:48:34.289115+00:00",
     "total_plays_all_platforms": 51703,
     "total_listeners": 28323,
     "total_streams_sc": 18635,
@@ -89,7 +89,7 @@
     "total_tracks": 21,
     "monthly_listeners": 14,
     "streams_28d": 26,
-    "fetch_status": "success",
+    "fetch_status": "failed",
     "last_successful_fetch": "2026-04-20T18:59:30.340034+00:00",
     "auth_method": "user_token",
     "note": "total_streams/monthly_listeners from Spotify for Artists (manual). Track values are popularity scores.",
@@ -141,7 +141,7 @@
         "popularity": 0
       },
       {
-        "name": "\u00c7a me saoule",
+        "name": "Ça me saoule",
         "popularity": 0
       },
       {
@@ -149,7 +149,7 @@
         "popularity": 0
       },
       {
-        "name": "Schneck de tra\u00eetre X L.Stoch",
+        "name": "Schneck de traître X L.Stoch",
         "popularity": 0
       },
       {
@@ -169,7 +169,7 @@
         "popularity": 0
       },
       {
-        "name": "D\u00e9j\u00e0 30 piges - Remix",
+        "name": "Déjà 30 piges - Remix",
         "popularity": 0
       },
       {
@@ -193,7 +193,7 @@
         "popularity": 0
       },
       {
-        "name": "\u5927\u5c55\u9d3b\u5716(Blueprint Supreme)",
+        "name": "大展鴻圖(Blueprint Supreme)",
         "popularity": 0
       },
       {
@@ -267,7 +267,7 @@
         "popularity": 0
       },
       {
-        "name": "\u00c7a me saoule",
+        "name": "Ça me saoule",
         "popularity": 0
       },
       {
@@ -275,7 +275,7 @@
         "popularity": 0
       },
       {
-        "name": "Schneck de tra\u00eetre X L.Stoch",
+        "name": "Schneck de traître X L.Stoch",
         "popularity": 0
       },
       {
@@ -291,7 +291,7 @@
         "popularity": 0
       },
       {
-        "name": "D\u00e9j\u00e0 30 piges - Remix",
+        "name": "Déjà 30 piges - Remix",
         "popularity": 0
       },
       {
@@ -311,7 +311,7 @@
         "popularity": 0
       },
       {
-        "name": "\u5927\u5c55\u9d3b\u5716(Blueprint Supreme)",
+        "name": "大展鴻圖(Blueprint Supreme)",
         "popularity": 0
       },
       {
@@ -371,7 +371,7 @@
         "popularity": 0
       },
       {
-        "name": "C\u0103\u0219tile Mele",
+        "name": "Căștile Mele",
         "popularity": 0
       },
       {
@@ -433,11 +433,11 @@
         "played_at": "2026-03-12T17:32:22.483Z"
       },
       {
-        "name": "Schneck de tra\u00eetre X L.Stoch",
+        "name": "Schneck de traître X L.Stoch",
         "played_at": "2026-03-12T16:35:38.702Z"
       },
       {
-        "name": "D\u00e9j\u00e0 30 piges - Remix",
+        "name": "Déjà 30 piges - Remix",
         "played_at": "2026-03-12T16:32:46.172Z"
       },
       {
@@ -453,7 +453,7 @@
         "played_at": "2026-03-12T16:22:39.716Z"
       },
       {
-        "name": "\u00c7a me saoule",
+        "name": "Ça me saoule",
         "played_at": "2026-03-12T16:20:09.369Z"
       },
       {
@@ -529,11 +529,11 @@
         "played_at": "2026-03-12T11:14:53.570Z"
       },
       {
-        "name": "Schneck de tra\u00eetre X L.Stoch",
+        "name": "Schneck de traître X L.Stoch",
         "played_at": "2026-03-12T11:13:44.517Z"
       },
       {
-        "name": "D\u00e9j\u00e0 30 piges - Remix",
+        "name": "Déjà 30 piges - Remix",
         "played_at": "2026-03-12T11:12:51.444Z"
       },
       {
@@ -549,7 +549,7 @@
         "played_at": "2026-03-12T10:59:13.587Z"
       },
       {
-        "name": "\u00c7a me saoule",
+        "name": "Ça me saoule",
         "played_at": "2026-03-12T10:56:46.427Z"
       },
       {
@@ -635,7 +635,7 @@
       "Sephiroth (feat. Shanakee & Farid Williams)": 139,
       "The Kraken X Otaku Black X Jimmy Cena": 123,
       "Ooh La La La!": 116,
-      "\u00c7a Me Saoule": 107,
+      "Ça Me Saoule": 107,
       "Interlude De Bat%Rd": 90,
       "No Eyes": 20,
       "Folks Now! (feat. Jaws & Farid Williams)": 17,
