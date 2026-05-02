@@ -10,6 +10,7 @@ env:
 
 permissions:
   contents: write
+  secrets: write
 
 jobs:
   fetch-playlists:
@@ -35,6 +36,8 @@ jobs:
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: thepoolpat/poolpat-plays
         run: python pipeline/fetch_playlists.py
 
       - name: Commit playlist data
