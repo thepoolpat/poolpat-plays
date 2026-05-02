@@ -21,6 +21,7 @@ Playlistcheck API (RapidAPI):
 
 import json
 import os
+import subprocess
 import sys
 import time
 from datetime import datetime, timezone
@@ -39,7 +40,7 @@ SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
 
 
 # ---------------------------------------------------------------------------
-# Spotify auth — PKCE refresh flow (client_id in body, no client_secret)
+# Spotify auth — PKCE refresh flow
 # ---------------------------------------------------------------------------
 def get_spotify_token() -> str:
     client_id = os.environ["SPOTIFY_CLIENT_ID"].strip()
@@ -61,8 +62,21 @@ def get_spotify_token() -> str:
         )
 
     data = resp.json()
-    if "refresh_token" in data and data["refresh_token"] != refresh_token:
-        print("  ⚠ Spotify rotated refresh token — update SPOTIFY_REFRESH_TOKEN secret")
+
+    # Auto-save rotated refresh token back to GitHub secret
+    new_refresh = data.get("refresh_token")
+    if new_refresh and new_refresh != refresh_token:
+        print("  ⚠ Spotify rotated refresh token — saving new token to secret...")
+        repo = os.environ.get("GITHUB_REPOSITORY", "thepoolpat/poolpat-plays")
+        try:
+            subprocess.run(
+                ["gh", "secret", "set", "SPOTIFY_REFRESH_TOKEN",
+                 "--repo", repo, "--body", new_refresh],
+                check=True, capture_output=True,
+            )
+            print("  ✅ SPOTIFY_REFRESH_TOKEN secret updated automatically")
+        except Exception as e:
+            print(f"  ⚠ Could not auto-update secret: {e} — update manually", file=sys.stderr)
 
     return data["access_token"]
 
@@ -87,18 +101,32 @@ def spotify_get(path: str, token: str, params: dict = None) -> dict:
 
 
 def get_artist_tracks(token: str) -> list[dict]:
-    """Returns deduplicated list of {id, name} for all tracks featuring Poolpat."""
+    """Returns deduplicated list of {id, name} for all tracks by Poolpat.
+
+    Uses only album,single groups — appears_on requires elevated user scopes
+    and causes 400 errors with PKCE tokens.
+    """
     tracks = []
-    albums_resp = spotify_get(
-        f"/artists/{ARTIST_ID}/albums",
-        token,
-        {"include_groups": "album,single,appears_on", "limit": 50, "market": "IE"},
-    )
-    for album in albums_resp.get("items", []):
-        album_tracks = spotify_get(f"/albums/{album['id']}/tracks", token, {"limit": 50})
-        for t in album_tracks.get("items", []):
-            if ARTIST_ID in [a["id"] for a in t.get("artists", [])]:
-                tracks.append({"id": t["id"], "name": t["name"]})
+    # appears_on excluded: requires user-library scope, causes 400 with PKCE token
+    for group in ("album", "single"):
+        try:
+            resp = spotify_get(
+                f"/artists/{ARTIST_ID}/albums",
+                token,
+                {"include_groups": group, "limit": 50, "market": "IE"},
+            )
+            for album in resp.get("items", []):
+                try:
+                    album_tracks = spotify_get(
+                        f"/albums/{album['id']}/tracks", token, {"limit": 50}
+                    )
+                    for t in album_tracks.get("items", []):
+                        if ARTIST_ID in [a["id"] for a in t.get("artists", [])]:
+                            tracks.append({"id": t["id"], "name": t["name"]})
+                except Exception as e:
+                    print(f"  Skipping album {album['id']}: {e}")
+        except Exception as e:
+            print(f"  Skipping group '{group}': {e}")
 
     seen: set[str] = set()
     unique = []
