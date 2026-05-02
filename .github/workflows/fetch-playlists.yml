@@ -2,9 +2,11 @@ name: Fetch Playlist Data
 
 on:
   schedule:
-    # Runs daily at 06:30 UTC, 30 min after fetch-plays so data is fresh
     - cron: "30 6 * * *"
   workflow_dispatch: {}
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
   contents: write
