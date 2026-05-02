@@ -40,7 +40,7 @@ const amSorted = sortedTracks(amTracks);
 
   <section class="section">
     <h2>Play Count Trends</h2>
-    <div class="chart-container">
+    <div class="chart-container" style="position:relative;height:320px;">
       <canvas id="plays-chart" role="img" aria-label="Line chart showing play count trends over time for SoundCloud, Spotify, and Apple Music"></canvas>
       <script type="application/json" id="chart-data">{JSON.stringify(historyRaw)}</script>
     </div>
@@ -48,22 +48,32 @@ const amSorted = sortedTracks(amTracks);
 
   <script type="module">
     const raw = JSON.parse(document.getElementById("chart-data").textContent);
-    const lines = raw.split("\n");
-    const headers = lines[0].split(",");
+    const lines = raw.split(/\r?\n/);
+    const headers = lines[0].split(",").map(h => h.trim());
     const rows = lines.slice(1).filter(l => l.trim()).map(l => {
       const vals = l.split(",");
       const obj = {};
-      headers.forEach((h, i) => obj[h.trim()] = vals[i]?.trim() ?? "");
+      headers.forEach((h, i) => obj[h] = vals[i]?.trim() ?? "");
       return obj;
     });
 
-    const labels = rows.map(r => {
-      const d = new Date(r.timestamp || r[headers[0]]);
+    // Deduplicate: keep one entry per calendar day (last entry wins)
+    const byDay = {};
+    rows.forEach(r => {
+      const day = (r.timestamp || "").slice(0, 10);
+      if (day) byDay[day] = r;
+    });
+    const dedupedRows = Object.values(byDay);
+
+    const labels = dedupedRows.map(r => {
+      const d = new Date(r.timestamp);
       return d.toLocaleDateString("en-IE", { month: "short", day: "numeric" });
     });
-    const sc = rows.map(r => parseInt(r.soundcloud_total_plays) || 0);
-    const sp = rows.map(r => parseInt(r.spotify_total_streams || r.spotify_total_popularity) || 0);
-    const am = rows.map(r => parseInt(r.apple_music_total_plays || r.apple_music_track_count) || 0);
+
+    // Use the actual CSV column names
+    const sc = dedupedRows.map(r => parseInt(r.soundcloud_total_plays) || 0);
+    const sp = dedupedRows.map(r => parseInt(r.spotify_total_popularity) || 0);
+    const am = dedupedRows.map(r => parseInt(r.apple_music_track_count) || 0);
 
     const { Chart, registerables } = await import("https://cdn.jsdelivr.net/npm/chart.js@4/+esm");
     Chart.register(...registerables);
