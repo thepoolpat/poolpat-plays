@@ -9,8 +9,10 @@ Discovers which Spotify playlists feature Poolpat tracks using:
 Outputs: data/playlists.json
 
 Requires env vars:
-  SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
+  SPOTIFY_CLIENT_ID, SPOTIFY_REFRESH_TOKEN
   RAPIDAPI_KEY
+
+Note: Uses PKCE refresh flow (no client_secret) matching spotify_auth.py.
 
 Playlistcheck API (RapidAPI):
   Only endpoint: GET https://playlistcheck.p.rapidapi.com/playlist
@@ -37,20 +39,32 @@ SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
 
 
 # ---------------------------------------------------------------------------
-# Spotify auth (refresh token flow)
+# Spotify auth — PKCE refresh flow (client_id in body, no client_secret)
 # ---------------------------------------------------------------------------
 def get_spotify_token() -> str:
+    client_id = os.environ["SPOTIFY_CLIENT_ID"].strip()
+    refresh_token = os.environ["SPOTIFY_REFRESH_TOKEN"].strip()
+
     resp = requests.post(
         SPOTIFY_TOKEN_URL,
         data={
             "grant_type": "refresh_token",
-            "refresh_token": os.environ["SPOTIFY_REFRESH_TOKEN"],
+            "refresh_token": refresh_token,
+            "client_id": client_id,
         },
-        auth=(os.environ["SPOTIFY_CLIENT_ID"], os.environ["SPOTIFY_CLIENT_SECRET"]),
         timeout=15,
     )
-    resp.raise_for_status()
-    return resp.json()["access_token"]
+
+    if not resp.ok:
+        raise RuntimeError(
+            f"Spotify token refresh failed ({resp.status_code}): {resp.text}"
+        )
+
+    data = resp.json()
+    if "refresh_token" in data and data["refresh_token"] != refresh_token:
+        print("  ⚠ Spotify rotated refresh token — update SPOTIFY_REFRESH_TOKEN secret")
+
+    return data["access_token"]
 
 
 # ---------------------------------------------------------------------------
@@ -144,7 +158,7 @@ def enrich_playlist(playlist_id: str) -> dict | None:
             time.sleep(retry_after)
             return enrich_playlist(playlist_id)
         if resp.status_code in (404, 422):
-            return None  # Playlist not indexed by Playlistcheck
+            return None
         resp.raise_for_status()
         return resp.json()
     except Exception as e:
@@ -158,7 +172,6 @@ def enrich_playlist(playlist_id: str) -> dict | None:
 def main():
     if not os.environ.get("RAPIDAPI_KEY"):
         print("WARNING: RAPIDAPI_KEY not set — skipping playlist fetch")
-        # Write empty file so portfolio sync doesn't 404
         OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
         if not OUTPUT_PATH.exists():
             OUTPUT_PATH.write_text(json.dumps({
@@ -170,33 +183,27 @@ def main():
 
     print("=== Poolpat Playlist Tracker ===")
 
-    # 1. Spotify auth
     print("\n[1/4] Authenticating with Spotify...")
     token = get_spotify_token()
     print("  OK")
 
-    # 2. Get all artist tracks
     print("\n[2/4] Fetching artist tracks...")
     tracks = get_artist_tracks(token)
     print(f"  Found {len(tracks)} tracks")
 
-    # 3. Discover playlist IDs via Spotify search
     print("\n[3/4] Searching for playlists...")
     playlist_ids: set[str] = set()
 
-    # Search by artist name
     for pid in search_playlists_for_artist(token):
         playlist_ids.add(pid)
     print(f"  Artist name search: {len(playlist_ids)} playlists")
 
-    # Search by each track name
     for track in tracks:
         for pid in search_playlists_for_track(track["name"], token):
             playlist_ids.add(pid)
         time.sleep(0.25)
     print(f"  Total unique playlist IDs: {len(playlist_ids)}")
 
-    # 4. Enrich via Playlistcheck
     print("\n[4/4] Enriching via Playlistcheck...")
     enriched = []
     for i, pid in enumerate(sorted(playlist_ids), 1):
