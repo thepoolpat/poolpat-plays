@@ -38,6 +38,12 @@ PLAYLISTCHECK_URL = "https://playlistcheck.p.rapidapi.com/playlist"
 SPOTIFY_API_BASE = "https://api.spotify.com/v1"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
 
+# Both repos share the same Spotify refresh token — update both on rotation
+SHARED_TOKEN_REPOS = [
+    "thepoolpat/poolpat-plays",
+    "thepoolpat/poolpat-portfolio",
+]
+
 
 # ---------------------------------------------------------------------------
 # Spotify auth — PKCE refresh flow
@@ -63,20 +69,20 @@ def get_spotify_token() -> str:
 
     data = resp.json()
 
-    # Auto-save rotated refresh token back to GitHub secret
+    # Auto-save rotated refresh token to ALL repos that share this token
     new_refresh = data.get("refresh_token")
     if new_refresh and new_refresh != refresh_token:
-        print("  ⚠ Spotify rotated refresh token — saving new token to secret...")
-        repo = os.environ.get("GITHUB_REPOSITORY", "thepoolpat/poolpat-plays")
-        try:
-            subprocess.run(
-                ["gh", "secret", "set", "SPOTIFY_REFRESH_TOKEN",
-                 "--repo", repo, "--body", new_refresh],
-                check=True, capture_output=True,
-            )
-            print("  ✅ SPOTIFY_REFRESH_TOKEN secret updated automatically")
-        except Exception as e:
-            print(f"  ⚠ Could not auto-update secret: {e} — update manually", file=sys.stderr)
+        print("  ⚠ Spotify rotated refresh token — updating all repos...")
+        for repo in SHARED_TOKEN_REPOS:
+            try:
+                subprocess.run(
+                    ["gh", "secret", "set", "SPOTIFY_REFRESH_TOKEN",
+                     "--repo", repo, "--body", new_refresh],
+                    check=True, capture_output=True,
+                )
+                print(f"  ✅ {repo} SPOTIFY_REFRESH_TOKEN updated")
+            except Exception as e:
+                print(f"  ⚠ Could not update {repo}: {e}", file=sys.stderr)
 
     return data["access_token"]
 
@@ -264,7 +270,7 @@ def main():
     OUTPUT_PATH.write_text(json.dumps(output, indent=2, ensure_ascii=False))
 
     total_reach = sum(p.get("followers") or 0 for p in enriched)
-    print(f"\n✅ {len(enriched)} playlists enriched → {OUTPUT_PATH}")
+    print(f"\n\u2705 {len(enriched)} playlists enriched \u2192 {OUTPUT_PATH}")
     print(f"   Total reach: {total_reach:,} followers")
     if enriched:
         print(f"   Top: {enriched[0]['name']} ({enriched[0].get('followers', 0):,} followers)")
