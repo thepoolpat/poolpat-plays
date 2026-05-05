@@ -98,6 +98,12 @@ def refresh_access_token(client_id: str, refresh_token: str) -> dict[str, Any]:
             "\n⚠  Spotify rotated your refresh token. Update SPOTIFY_REFRESH_TOKEN secret.",
             file=sys.stderr,
         )
+        if gh_env := os.environ.get("GITHUB_ENV"):
+            try:
+                with open(gh_env, "a") as f:
+                    f.write(f"SPOTIFY_REFRESH_TOKEN={data['refresh_token']}\n")
+            except OSError as e:
+                print(f"  ⚠ Could not write to $GITHUB_ENV: {e}", file=sys.stderr)
 
     return data
 

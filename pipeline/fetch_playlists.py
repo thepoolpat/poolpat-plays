@@ -99,6 +99,12 @@ def get_spotify_token() -> str:
                 print(f"  ✅ {repo} SPOTIFY_REFRESH_TOKEN updated")
             except Exception as e:
                 print(f"  ⚠ Could not update {repo}: {e}", file=sys.stderr)
+        if gh_env := os.environ.get("GITHUB_ENV"):
+            try:
+                with open(gh_env, "a") as f:
+                    f.write(f"SPOTIFY_REFRESH_TOKEN={new_refresh}\n")
+            except OSError as e:
+                print(f"  ⚠ Could not write to $GITHUB_ENV: {e}", file=sys.stderr)
 
     return data["access_token"]
 
