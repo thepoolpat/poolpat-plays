@@ -30,8 +30,24 @@ from pathlib import Path
 import requests
 
 # ---------------------------------------------------------------------------
-# Config
+# Load environment variables from .env.spotify
 # ---------------------------------------------------------------------------
+PIPE_DIR = Path(__file__).resolve().parent
+ENV_FILE = PIPE_DIR / ".env.spotify"
+
+if ENV_FILE.exists():
+    with open(ENV_FILE, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line and '=' in line:
+                key, value = line.split('=', 1)
+                value = value.strip('"\'')
+                os.environ[key] = value
+    print(f"✅ Loaded credentials from {ENV_FILE}")
+else:
+    print("⚠️ .env.spotify not found")
+
+# Config starts here
 ARTIST_ID = "4rr3o9anpUXitNXo0W4uX7"  # Poolpat
 OUTPUT_PATH = Path("data/playlists.json")
 PLAYLISTCHECK_URL = "https://playlistcheck.p.rapidapi.com/playlist"
