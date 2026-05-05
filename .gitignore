@@ -9,3 +9,8 @@ dist/
 *.p8
 *.pem
 *.key
+
+# Python bytecode
+pipeline/__pycache__/
+*.pyc
+*.pyo
