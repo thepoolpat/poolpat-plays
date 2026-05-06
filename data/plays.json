@@ -1,6 +1,6 @@
 {
   "artist": "Poolpat",
-  "last_updated": "2026-05-06T00:26:37.938753+00:00",
+  "last_updated": "2026-05-06T00:28:35.434490+00:00",
   "soundcloud": {
     "url": "https://soundcloud.com/poolpat",
     "tracks": {
@@ -54,7 +54,7 @@
     "total_tracks": 46,
     "followers": 128,
     "fetch_status": "success",
-    "last_successful_fetch": "2026-05-06T00:26:40.597605+00:00",
+    "last_successful_fetch": "2026-05-06T00:28:37.789850+00:00",
     "total_plays_all_platforms": 51703,
     "total_listeners": 28323,
     "total_streams_sc": 18635,
@@ -90,7 +90,7 @@
     "monthly_listeners": 14,
     "streams_28d": 26,
     "fetch_status": "success",
-    "last_successful_fetch": "2026-05-06T00:26:43.210355+00:00",
+    "last_successful_fetch": "2026-05-06T00:28:39.844291+00:00",
     "auth_method": "user_token",
     "note": "total_streams/monthly_listeners from Spotify for Artists (manual). Track values are popularity scores.",
     "top_tracks_short": [
