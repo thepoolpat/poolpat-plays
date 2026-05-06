@@ -74,13 +74,19 @@ jobs:
             git push
           fi
 
-      - name: Fail if both fetches failed
-        if: steps.fetch_plays.outcome == 'failure' && steps.fetch_playlists.outcome == 'failure'
+      - name: Run summary
+        if: always()
+        env:
+          PLAYS_OUTCOME: ${{ steps.fetch_plays.outcome }}
+          PLAYLISTS_OUTCOME: ${{ steps.fetch_playlists.outcome }}
         run: |
-          echo "::error::Both fetches failed — likely a credential issue (Spotify revoked?)"
-          exit 1
-
-      - name: Warn on partial failure
-        if: ${{ (steps.fetch_plays.outcome == 'failure') != (steps.fetch_playlists.outcome == 'failure') }}
-        run: |
-          echo "::warning::One of the fetches failed — check logs above"
+          echo "fetch_plays:     $PLAYS_OUTCOME"
+          echo "fetch_playlists: $PLAYLISTS_OUTCOME"
+          if [ "$PLAYS_OUTCOME" = "failure" ] && [ "$PLAYLISTS_OUTCOME" = "failure" ]; then
+            echo "::error::Both fetches failed — likely a credential issue (Spotify revoked?)"
+            exit 1
+          elif [ "$PLAYS_OUTCOME" = "failure" ] || [ "$PLAYLISTS_OUTCOME" = "failure" ]; then
+            echo "::warning::Partial failure — plays=$PLAYS_OUTCOME playlists=$PLAYLISTS_OUTCOME"
+          else
+            echo "Both fetches succeeded"
+          fi
