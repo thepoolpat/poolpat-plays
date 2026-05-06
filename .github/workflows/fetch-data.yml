@@ -24,6 +24,15 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
 
+    # Shared env at job level — step-level env would shadow $GITHUB_ENV
+    # writes from earlier steps and break in-process token rotation.
+    env:
+      SPOTIFY_CLIENT_ID:     ${{ secrets.SPOTIFY_CLIENT_ID }}
+      SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+      GH_TOKEN:              ${{ secrets.GH_PAT }}
+      GITHUB_REPOSITORY:     ${{ github.repository }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -42,24 +51,14 @@ jobs:
         id: fetch_plays
         continue-on-error: true
         env:
-          SPOTIFY_CLIENT_ID:     ${{ secrets.SPOTIFY_CLIENT_ID }}
-          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
-          APPLE_MUSIC_TOKEN:     ${{ secrets.APPLE_MUSIC_TOKEN }}
-          GH_TOKEN:              ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY:     ${{ github.repository }}
+          APPLE_MUSIC_TOKEN: ${{ secrets.APPLE_MUSIC_TOKEN }}
         run: python pipeline/fetch_plays.py
 
       - name: Fetch playlist data
         id: fetch_playlists
         continue-on-error: true
         env:
-          SPOTIFY_CLIENT_ID:     ${{ secrets.SPOTIFY_CLIENT_ID }}
-          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
-          RAPIDAPI_KEY:          ${{ secrets.RAPIDAPI_KEY }}
-          GH_TOKEN:              ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY:     ${{ github.repository }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: python pipeline/fetch_playlists.py
 
       - name: Commit data updates
