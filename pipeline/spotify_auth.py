@@ -13,6 +13,7 @@ import base64
 import hashlib
 import os
 import secrets
+import subprocess
 import sys
 import urllib.parse
 import webbrowser
@@ -25,6 +26,7 @@ TOKEN_URL = "https://accounts.spotify.com/api/token"
 AUTH_URL = "https://accounts.spotify.com/authorize"
 DEFAULT_REDIRECT_URI = "http://127.0.0.1:8888/callback"
 DEFAULT_SCOPES = "user-read-private user-top-read user-read-recently-played streaming"
+SHARED_TOKEN_REPOS = ["thepoolpat/poolpat-plays", "thepoolpat/poolpat-portfolio"]
 
 
 def generate_pkce_pair() -> tuple[str, str]:
@@ -104,6 +106,17 @@ def refresh_access_token(client_id: str, refresh_token: str) -> dict[str, Any]:
                     f.write(f"SPOTIFY_REFRESH_TOKEN={data['refresh_token']}\n")
             except OSError as e:
                 print(f"  ⚠ Could not write to $GITHUB_ENV: {e}", file=sys.stderr)
+        new_refresh = data["refresh_token"]
+        for repo in SHARED_TOKEN_REPOS:
+            try:
+                subprocess.run(
+                    ["gh", "secret", "set", "SPOTIFY_REFRESH_TOKEN",
+                     "--repo", repo, "--body", new_refresh],
+                    check=True, capture_output=True,
+                )
+                print(f"  ✅ {repo} SPOTIFY_REFRESH_TOKEN updated")
+            except Exception as e:
+                print(f"  ⚠ Could not update {repo}: {e}", file=sys.stderr)
 
     return data
 
