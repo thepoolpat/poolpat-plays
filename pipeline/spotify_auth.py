@@ -101,9 +101,13 @@ def refresh_access_token(client_id: str, refresh_token: str) -> dict[str, Any]:
             file=sys.stderr,
         )
         if gh_env := os.environ.get("GITHUB_ENV"):
+            new_token = data["refresh_token"]
+            # Register as masked BEFORE writing to GITHUB_ENV — otherwise the
+            # token leaks into subsequent steps' env block in the runner log.
+            print(f"::add-mask::{new_token}")
             try:
                 with open(gh_env, "a") as f:
-                    f.write(f"SPOTIFY_REFRESH_TOKEN={data['refresh_token']}\n")
+                    f.write(f"SPOTIFY_REFRESH_TOKEN={new_token}\n")
             except OSError as e:
                 print(f"  ⚠ Could not write to $GITHUB_ENV: {e}", file=sys.stderr)
         new_refresh = data["refresh_token"]

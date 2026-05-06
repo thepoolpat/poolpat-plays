@@ -100,6 +100,9 @@ def get_spotify_token() -> str:
             except Exception as e:
                 print(f"  ⚠ Could not update {repo}: {e}", file=sys.stderr)
         if gh_env := os.environ.get("GITHUB_ENV"):
+            # Register as masked BEFORE writing to GITHUB_ENV — otherwise the
+            # token leaks into subsequent steps' env block in the runner log.
+            print(f"::add-mask::{new_refresh}")
             try:
                 with open(gh_env, "a") as f:
                     f.write(f"SPOTIFY_REFRESH_TOKEN={new_refresh}\n")
