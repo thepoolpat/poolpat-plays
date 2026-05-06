@@ -81,8 +81,6 @@ jobs:
           exit 1
 
       - name: Warn on partial failure
-        if: |
-          (steps.fetch_plays.outcome == 'failure') !=
-          (steps.fetch_playlists.outcome == 'failure')
+        if: ${{ (steps.fetch_plays.outcome == 'failure') != (steps.fetch_playlists.outcome == 'failure') }}
         run: |
           echo "::warning::One of the fetches failed — check logs above"
